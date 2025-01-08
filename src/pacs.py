@@ -1,8 +1,7 @@
 from pydicom.uid import JPEG2000Lossless, DigitalXRayImageStorageForProcessing
 from pynetdicom import AE, StoragePresentationContexts, debug_logger
 from settings import PACS, DEBUG
-from constraint.pynetdicom.sop_class import PatientRootQueryRetrieveInformationModelFind
-
+from constraint.uid import PatientRootQueryRetrieveInformationModelFind
 def save_dcm_to_pacs(dicom):
     if DEBUG:
         debug_logger()

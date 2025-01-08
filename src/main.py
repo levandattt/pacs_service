@@ -22,8 +22,8 @@ def get_all_dicom():
 
 
 def run():
-    dicom_path = 'dicom_files/example/PM5644-960x540_RGB.dcm'
-    # dicom_path = 'dicom_files/1.2.276.0.7230010.3.1.2.1889283818.3972.1736132619.542 (1)/1.2.276.0.7230010.3.1.4.1889283818.3972.1736132654.334.dcm'
+    # dicom_path = 'dicom_files/example/PM5644-960x540_RGB.dcm'
+    dicom_path = 'dicom_files/example_private/1.2.276.0.7230010.3.1.4.1889283818.3972.1736132654.334.dcm'
     dicom = dcmread(dicom_path)
     status = pacs.save_dcm_to_pacs(dicom)
     print (status)
