@@ -4,5 +4,5 @@ PACS={
     'ae_title': 'DCM4CHEE',
 }
 
-DEBUG = False
+DEBUG = True
 

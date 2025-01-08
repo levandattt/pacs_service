@@ -2,3 +2,4 @@
 .idea/
 __pycache__/
 /src/dicom_files/example_private
+/src/dicom_files/large_example/

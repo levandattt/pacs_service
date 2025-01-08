@@ -2,6 +2,9 @@ from pydicom.uid import JPEG2000Lossless, DigitalXRayImageStorageForProcessing
 from pynetdicom import AE, StoragePresentationContexts, debug_logger
 from settings import PACS, DEBUG
 from constraint.uid import PatientRootQueryRetrieveInformationModelFind
+from src.constraint.uid import PatientStudyOnlyQueryRetrieveInformationModelFind
+
+
 def store_dcm(dicom):
     if DEBUG:
         debug_logger()
@@ -24,31 +27,31 @@ def store_dcm(dicom):
     else:
         print("Association rejected, aborted or never connected")
 
-def find_all(ds):
+def find_studies(ds):
     if DEBUG:
         debug_logger()
 
+
+
     ae = AE()
-
-    ae.add_requested_context(PatientRootQueryRetrieveInformationModelFind)
-
-    # ae.add_requested_context('1.2.840.10008.5.1.4.1.1.77.1.5.1')
-    # ae.add_supported_context('1.2.840.10008.1.1')
+    ae.add_requested_context(PatientStudyOnlyQueryRetrieveInformationModelFind)
     assoc = ae.associate(PACS.get('server'), PACS.get('port'), ae_title=PACS.get('ae_title'))
 
     if assoc.is_established:
         # Send the C-FIND request
-        responses = assoc.send_c_find(ds, PatientRootQueryRetrieveInformationModelFind)
+        responses = assoc.send_c_find(ds, PatientStudyOnlyQueryRetrieveInformationModelFind)
         for (status, identifier) in responses:
+            print('=====================================')
             if status:
-                print('C-FIND query status: 0x{0:04X}'.format(status.Status))
-                print('identifier', identifier)
-
+                # if status.Status == 0xFF00:
+                    print('C-FIND query status: 0x{0:04X}'.format(status.Status))
+                    print('-------------------------------------')
+                    print(identifier)
             else:
                 print('Connection timed out, was aborted or received invalid response')
-            print ('=====================================')
         # Release the association
         assoc.release()
+        return responses
     else:
         print('Association rejected, aborted or never connected')
 
