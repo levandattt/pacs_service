@@ -1,0 +1,4 @@
+/.venv/
+.idea/
+__pycache__/
+/src/dicom_files/example_private
